@@ -1,61 +1,107 @@
 <template>
   <AppLayout>
     <div class="dashboard">
+      <div class="page-header">
+        <h1 class="page-title">Аналитика продаж</h1>
+      </div>
+
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-icon">🧱</div>
-          <div class="stat-content">
-            <h3>Всего материалов</h3>
-            <p class="stat-value">{{ materialsCount }}</p>
+          <div class="stat-header">
+            <div class="stat-content">
+              <h3>Всего материалов</h3>
+              <p class="stat-value">{{ materialsCount }}</p>
+              <div class="stat-change positive">
+                <i class="fas fa-arrow-up"></i> 12% с прошлого месяца
+              </div>
+            </div>
+            <div class="stat-icon">
+              <i class="fas fa-cubes"></i>
+            </div>
           </div>
         </div>
+
         <div class="stat-card">
-          <div class="stat-icon">👥</div>
-          <div class="stat-content">
-            <h3>Всего клиентов</h3>
-            <p class="stat-value">{{ clientsCount }}</p>
+          <div class="stat-header">
+            <div class="stat-content">
+              <h3>Всего клиентов</h3>
+              <p class="stat-value">{{ clientsCount }}</p>
+              <div class="stat-change positive">
+                <i class="fas fa-arrow-up"></i> 8% с прошлого месяца
+              </div>
+            </div>
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
           </div>
         </div>
+
         <div class="stat-card">
-          <div class="stat-icon">🛒</div>
-          <div class="stat-content">
-            <h3>Всего покупок</h3>
-            <p class="stat-value">{{ purchasesCount }}</p>
+          <div class="stat-header">
+            <div class="stat-content">
+              <h3>Всего покупок</h3>
+              <p class="stat-value">{{ purchasesCount }}</p>
+              <div class="stat-change negative">
+                <i class="fas fa-arrow-down"></i> 3% с прошлого месяца
+              </div>
+            </div>
+            <div class="stat-icon">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
           </div>
         </div>
+
         <div class="stat-card">
-          <div class="stat-icon">💰</div>
-          <div class="stat-content">
-            <h3>Общая сумма</h3>
-            <p class="stat-value">{{ totalAmount }} ₽</p>
+          <div class="stat-header">
+            <div class="stat-content">
+              <h3>Общая сумма</h3>
+              <p class="stat-value">{{ totalAmount }} ₽</p>
+              <div class="stat-change positive">
+                <i class="fas fa-arrow-up"></i> 15% с прошлого месяца
+              </div>
+            </div>
+            <div class="stat-icon">
+              <i class="fas fa-ruble-sign"></i>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="recent-section">
-        <h2>Последние покупки</h2>
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Последние покупки</h2>
+          <div>
+            <button class="btn btn-outline">
+              <i class="fas fa-filter"></i> Фильтр
+            </button>
+          </div>
+        </div>
+
         <div v-if="loading" class="loading">Загрузка...</div>
         <div v-else-if="recentPurchases.length === 0" class="empty-state">
-          Нет данных о покупках
+          <i class="fas fa-box-open"></i>
+          <p>Нет данных о покупках</p>
         </div>
-        <table v-else class="data-table">
-          <thead>
-            <tr>
-              <th>Дата</th>
-              <th>Клиент</th>
-              <th>Материалы</th>
-              <th>Сумма</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="purchase in recentPurchases" :key="purchase.id">
-              <td>{{ formatDate(purchase.date) }}</td>
-              <td>{{ getClientName(purchase.clientId) }}</td>
-              <td>{{ purchase.items.length }} позиций</td>
-              <td>{{ purchase.totalAmount }} ₽</td>
-            </tr>
-          </tbody>
-        </table>
+        <div v-else class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Дата</th>
+                <th>Клиент</th>
+                <th>Материалы</th>
+                <th>Сумма</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="purchase in recentPurchases" :key="purchase.id">
+                <td>{{ formatDate(purchase.date) }}</td>
+                <td>{{ getClientName(purchase.clientId) }}</td>
+                <td>{{ purchase.items.length }} позиций</td>
+                <td>{{ purchase.totalAmount }} ₽</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </AppLayout>
@@ -117,6 +163,51 @@ const formatDate = (dateString) => {
 </script>
 
 <style scoped>
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+}
+
+.stat-card:nth-child(1)::before {
+  background-color: var(--primary);
+}
+.stat-card:nth-child(2)::before {
+  background-color: var(--success);
+}
+.stat-card:nth-child(3)::before {
+  background-color: var(--warning);
+}
+.stat-card:nth-child(4)::before {
+  background-color: var(--danger);
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.stat-card:nth-child(1) .stat-icon {
+  background-color: var(--primary);
+}
+.stat-card:nth-child(2) .stat-icon {
+  background-color: var(--success);
+}
+.stat-card:nth-child(3) .stat-icon {
+  background-color: var(--warning);
+}
+.stat-card:nth-child(4) .stat-icon {
+  background-color: var(--danger);
+}
 .dashboard {
   display: flex;
   flex-direction: column;
