@@ -11,7 +11,7 @@
         </router-link>
         <router-link to="/materials" class="nav-item">
           <span class="icon">🧱</span>
-          <span class="text">Материалы</span>
+          <span class="text">Материалы и услуги</span>
         </router-link>
         <router-link to="/clients" class="nav-item">
           <span class="icon">👥</span>
