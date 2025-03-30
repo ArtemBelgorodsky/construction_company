@@ -44,33 +44,33 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
+import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useAuthStore } from '../stores/auth';
 
-const route = useRoute()
-const router = useRouter()
-const authStore = useAuthStore()
+const route = useRoute();
+const router = useRouter();
+const authStore = useAuthStore();
 
 const title = computed(() => {
   switch (route.name) {
     case 'Dashboard':
-      return 'Панель управления'
+      return 'Панель управления';
     case 'Materials':
-      return 'Материалы'
+      return 'Материалы и услуги';
     case 'Clients':
-      return 'Клиенты'
+      return 'Клиенты';
     case 'Reports':
-      return 'Отчеты'
+      return 'Отчеты';
     default:
-      return 'Информационная система'
+      return 'Информационная система';
   }
-})
+});
 
 const logout = () => {
-  authStore.logout()
-  router.push('/login')
-}
+  authStore.logout();
+  router.push('/login');
+};
 </script>
 
 <style scoped>
@@ -111,7 +111,8 @@ const logout = () => {
   transition: all 0.3s;
 }
 
-.nav-item:hover, .nav-item.router-link-active {
+.nav-item:hover,
+.nav-item.router-link-active {
   background-color: rgba(255, 255, 255, 0.1);
   color: white;
 }
@@ -181,26 +182,26 @@ const logout = () => {
   .app-layout {
     flex-direction: column;
   }
-  
+
   .sidebar {
     width: 100%;
     height: auto;
   }
-  
+
   .sidebar-nav {
     display: flex;
     overflow-x: auto;
     padding: 0.5rem;
   }
-  
+
   .nav-item {
     padding: 0.5rem 1rem;
   }
-  
+
   .content-header {
     padding: 1rem;
   }
-  
+
   .content-body {
     padding: 1rem;
   }
